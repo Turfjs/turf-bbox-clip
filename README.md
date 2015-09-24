@@ -9,10 +9,10 @@ Takes a Feature and a bbox and clips the feature to the bbox using [lineclip](ht
 
 ### Parameters
 
-| parameter | type              | description                                                                        |
-| --------- | ----------------- | ---------------------------------------------------------------------------------- |
-| `feature` | Feature           | feature to clip to the bbox                                                        |
-| `bbox`    | Array\.\<number\> | an Array of bounding box coordinates in the form: ```[xLow, yLow, xHigh, yHigh]``` |
+| parameter | type              | description                                                                              |
+| --------- | ----------------- | ---------------------------------------------------------------------------------------- |
+| `feature` | Feature           | feature to clip to the bbox                                                              |
+| `bbox`    | Array\.\<number\> | an Array of bounding box coordinates in the form: ```[minLon, minLat, maxLon, maxLat]``` |
 
 
 ### Example
