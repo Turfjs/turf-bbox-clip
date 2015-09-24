@@ -5,7 +5,7 @@ var clip = require('../'),
 
 var bbox = [-79.0631103515625, 38.74123075381231, -77.2503662109375, 39.69450749856091];
 
-var REGEN = true
+var REGEN = false;
 
 
 glob(__dirname+'/fixtures/in/*.geojson', function (err, files) {

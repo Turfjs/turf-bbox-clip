@@ -13,8 +13,7 @@
     "benchmark": "^1.0.0",
     "glob": "^5.0.14",
     "lineclip": "^1",
-    "tape": "^4.2.0",
-    "turf-featurecollection": "^1.0.1"
+    "tape": "^4.2.0"
   },
   "devDependencies": {
     "dox": "^0.8.0",
