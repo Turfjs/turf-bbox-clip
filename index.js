@@ -18,20 +18,25 @@ var lineclip = require('lineclip');
  */
 module.exports = function(feature, bbox) {
   var geom = feature;
-  if (feature.geometry) {
-    geom = feature.geometry;
-  }
+  var lineCoordinates;
+
+  if (feature.geometry) geom = feature.geometry;
+
 
   if (geom.type === 'LineString') {
-    return buildFeature('MultiLineString', lineclip(geom.coordinates, bbox), feature.properties);
-  } if (geom.type === 'MultiLineString') {
-    var lines = [];
-    geom.coordinates.forEach(function(line) {
-      lineclip(line, bbox).forEach(function(result) {
-        lines.push(result);
-      });
-    });
+    lineCoordinates = [geom.coordinates];
+  } else if (geom.type === 'MultiLineString') {
+    lineCoordinates = geom.coordinates;
+  }
 
+  if (lineCoordinates) {
+    var lines = [];
+    for (var i = 0; i < lineCoordinates.length; i++) {
+      lineclip(lineCoordinates[i], bbox, lines);
+    }
+    if (lines.length === 1) {
+      return buildFeature('LineString', lines[0], feature.properties);
+    }
     return buildFeature('MultiLineString', lines, feature.properties);
   } else if (geom.type === 'Polygon') {
     return buildFeature('Polygon', clipPolygon(geom.coordinates, bbox), feature.properties);
@@ -44,15 +49,15 @@ module.exports = function(feature, bbox) {
 
 function clipPolygon(rings, bbox) {
   var outRings = [];
-  rings.forEach(function(ring) {
-    var clipped = lineclip.polygon(ring, bbox);
+  for (var i = 0; i < rings.length; i++) {
+    var clipped = lineclip.polygon(rings[i], bbox);
     if (clipped.length > 0) {
       if (clipped[0][0] !== clipped[clipped.length - 1][0] || clipped[0][1] !== clipped[clipped.length - 1][1]) {
         clipped.push(clipped[0]);
       }
       outRings.push(clipped);
     }
-  });
+  }
   return outRings;
 }
 
@@ -62,7 +67,7 @@ function buildFeature (type, lines, properties) {
     'properties': properties || {},
     'geometry': {
       'type': type,
-      'coordinates': lines.slice()
+      'coordinates': lines
     }
   };
 }
