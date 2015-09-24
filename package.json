@@ -4,7 +4,8 @@
   "description": "Fast clipping of lines and polygons against a bbox",
   "main": "index.js",
   "scripts": {
-    "test": "node test/test.js"
+    "test": "eslint index.js && node test/test.js",
+    "doc": "dox -r < index.js | doxme --readme > README.md"
   },
   "author": "Tim Channell",
   "license": "ISC",
@@ -14,5 +15,11 @@
     "lineclip": "^1",
     "tape": "^4.2.0",
     "turf-featurecollection": "^1.0.1"
+  },
+  "devDependencies": {
+    "dox": "^0.8.0",
+    "doxme": "^1.8.2",
+    "eslint": "^1.5.1",
+    "eslint-config-mourner": "^1.0.0"
   }
 }
