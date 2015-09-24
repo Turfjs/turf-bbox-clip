@@ -7,51 +7,19 @@ var bbox = [-79.0631103515625, 38.74123075381231, -77.2503662109375, 39.69450749
 
 var REGEN = true
 
-test('clip -- linestring', function (t) {
-	var feature = JSON.parse(fs.readFileSync(__dirname+"/fixtures/in/linestring.geojson"));
 
-	var res = clip(feature, bbox);
-	//console.log(JSON.stringify(res));
+glob(__dirname+'/fixtures/in/*.geojson', function (err, files) {
+  files.forEach(function(file) {
+    var name = file.split("/").slice(-1)[0].replace(/\.geojson/, "");
+    var outfile = file.replace(/\/in\//, "/out/");
 
-  if (REGEN) {fs.writeFileSync(__dirname+"/fixtures/out/linestring.geojson", JSON.stringify(res)); }
-  t.deepEqual(res, JSON.parse(fs.readFileSync(__dirname+"/fixtures/out/linestring.geojson")));
-	t.end();
-});
+    test('clip -- '+name, function (t) {
+      var feature = JSON.parse(fs.readFileSync(file));
+      var res = clip(feature, bbox);
 
-test('clip -- multilinestring', function (t) {
-  var feature = JSON.parse(fs.readFileSync(__dirname+"/fixtures/in/multilinestring.geojson"));
-
-  var res = clip(feature, bbox);
-  //console.log(JSON.stringify(res));
-
-  if (REGEN) {fs.writeFileSync(__dirname+"/fixtures/out/multilinestring.geojson", JSON.stringify(res)); }
-  t.deepEqual(res, JSON.parse(fs.readFileSync(__dirname+"/fixtures/out/multilinestring.geojson")));
-  t.end();
-
-});
-
-test('clip -- polygon', function (t) {
-  var feature = JSON.parse(fs.readFileSync(__dirname+"/fixtures/in/polygon.geojson"));
-
-  var res = clip(feature, bbox);
-  //console.log(JSON.stringify(res));
-
-  if (REGEN) {fs.writeFileSync(__dirname+"/fixtures/out/polygon.geojson", JSON.stringify(res)); }
-  t.deepEqual(res, JSON.parse(fs.readFileSync(__dirname+"/fixtures/out/polygon.geojson")));
-  t.end();
-
-});
-
-
-
-test('clip -- polygon with crossing hole', function (t) {
-  var feature = JSON.parse(fs.readFileSync(__dirname+"/fixtures/in/polygon-crossing-hole.geojson"));
-
-  var res = clip(feature, bbox);
-  //console.log(JSON.stringify(res));
-
-  if (REGEN) {fs.writeFileSync(__dirname+"/fixtures/out/polygon-crossing-hole.geojson", JSON.stringify(res)); }
-  t.deepEqual(res, JSON.parse(fs.readFileSync(__dirname+"/fixtures/out/polygon-crossing-hole.geojson")));
-  t.end();
-
+      if (REGEN) {fs.writeFileSync(outfile, JSON.stringify(res)); }
+      t.deepEqual(res, JSON.parse(fs.readFileSync(outfile)));
+      t.end();
+    });
+  });
 });
