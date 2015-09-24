@@ -5,7 +5,7 @@ var lineclip = require('lineclip');
  *
  * @module turf/bbox-clip
  * @category transformation
- * @param {(Feature<LineString>|Feature<MultiLineString>|Feature<Polygon>|Feature<MultiPolygon>)} feature feature to clip to the bbox
+ * @param {Feature} feature feature to clip to the bbox
  * @param {Array<number>} bbox an Array of bounding box coordinates in the form: ```[xLow, yLow, xHigh, yHigh]```
  * @return {(Feature<Polygon>|Feature<MultiPolygon>|Feature<MultiLineString>)}
  * @example
