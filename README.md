@@ -1,3 +1,4 @@
+# DEPRECATED - replaced with [`@turf/bbox-clip`](https://github.com/Turfjs/turf/tree/master/packages/turf-bbox-clip)
 # turf-bbox-clip
 
 Fast clipping of lines and polygons against a bbox
